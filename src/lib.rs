@@ -1,3 +1,10 @@
+#![warn(
+     clippy::all,
+     clippy::pedantic,
+     clippy::nursery,
+     clippy::cargo,
+ )]
+
 use pyo3::prelude::*;
 use rpls;
 
@@ -29,7 +36,7 @@ fn pairs_to_landscape(bd_pairs: Vec<(f32, f32)>, k: usize, debug: bool) -> PyRes
 #[pyfunction]
 fn pairs_to_l2_norm(bd_pairs: Vec<(f32, f32)>, k: usize, debug: bool) -> PyResult<f32> {
     let bd_pairs = convert_bd_pairs(bd_pairs);
-    Ok(rpls::rpls::pairs_to_l2_norm(bd_pairs, k, debug))
+    Ok(rpls::rpls::pairs_to_l2_norm(bd_pairs, k, debug).unwrap())
 }
 
 /// A Python module implemented in Rust.
