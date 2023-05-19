@@ -1,1 +1,1 @@
-# rpls-py
+# Python bindings for fast_pl 
