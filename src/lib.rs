@@ -6,13 +6,13 @@
  )]
 
 use pyo3::prelude::*;
-use rpls;
+use fast_pl;
 
-fn convert_bd_pairs(bd_pairs: Vec<(f32, f32)>) -> Vec<rpls::birthdeath::BirthDeath>{
-    bd_pairs.into_iter().map(|pair| rpls::birthdeath::BirthDeath{birth: pair.0, death: pair.1}).collect()
+fn convert_bd_pairs(bd_pairs: Vec<(f32, f32)>) -> Vec<fast_pl::birthdeath::BirthDeath>{
+    bd_pairs.into_iter().map(|pair| fast_pl::birthdeath::BirthDeath{birth: pair.0, death: pair.1}).collect()
 }
 
-fn convert_landscape(landscapes: Vec<Vec<rpls::persistencelandscape::PointOrd>>) -> Vec<Vec<(f32, f32)>>{
+fn convert_landscape(landscapes: Vec<Vec<fast_pl::persistencelandscape::PointOrd>>) -> Vec<Vec<(f32, f32)>>{
     landscapes
         .into_iter()
         .map(|landscape|
@@ -27,7 +27,7 @@ fn convert_landscape(landscapes: Vec<Vec<rpls::persistencelandscape::PointOrd>>)
 #[pyfunction]
 fn pairs_to_landscape(bd_pairs: Vec<(f32, f32)>, k: usize, debug: bool) -> PyResult<Vec<Vec<(f32, f32)>>> {
     let bd_pairs = convert_bd_pairs(bd_pairs);
-    let landscapes = rpls::rpls::pairs_to_landscape(bd_pairs, k, debug).unwrap();
+    let landscapes = fast_pl::rpls::pairs_to_landscape(bd_pairs, k, debug).unwrap();
 
     Ok(convert_landscape(landscapes))
 
@@ -36,7 +36,7 @@ fn pairs_to_landscape(bd_pairs: Vec<(f32, f32)>, k: usize, debug: bool) -> PyRes
 #[pyfunction]
 fn pairs_to_l2_norm(bd_pairs: Vec<(f32, f32)>, k: usize, debug: bool) -> PyResult<f32> {
     let bd_pairs = convert_bd_pairs(bd_pairs);
-    Ok(rpls::rpls::pairs_to_l2_norm(bd_pairs, k, debug).unwrap())
+    Ok(fast_pl::rpls::pairs_to_l2_norm(bd_pairs, k, debug).unwrap())
 }
 
 /// A Python module implemented in Rust.
